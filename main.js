@@ -1,25 +1,25 @@
 const fs = require('fs');
 
-// Зчитати дані з data.json
-fs.readFile('data.json', 'utf8', (помилка, дані) => {
-  if (помилка) {
-    console.error('Помилка при зчитуванні data.json:', помилка);
+// Read the data from data.json
+fs.readFile('data.json', 'utf8', (err, data) => {
+  if (err) {
+    console.error('Error reading data.json:', err);
     return;
   }
 
   try {
-    const даніJson = JSON.parse(дані);
+    const jsonData = JSON.parse(data);
 
-    const форматованіДані = даніJson.map(елемент => `${елемент.StockCode}-${елемент.ValCode}-${елемент.Attraction}`);
+    const formattedData = jsonData.map(item => `${item.StockCode}-${item.ValCode}-${item.Attraction}`);
 
-    const текстВиводу = форматованіДані.join('\n');
+    const outputText = formattedData.join('\n');
 
-    // Зберегти форматовані дані у output.txt
-    fs.writeFile('output.txt', текстВиводу, (помилка) => {
-      if (помилка) throw помилка;
-      console.log('Вивід збережено у файлі output.txt');
+    // Write the formatted data to output.txt
+    fs.writeFile('output.txt', outputText, (err) => {
+      if (err) throw err;
+      console.log('Output saved to output.txt');
     });
-  } catch (помилка) {
-    console.error('Помилка під час розбору JSON:', помилка);
+  } catch (error) {
+    console.error('Error parsing JSON:', error);
   }
 });
